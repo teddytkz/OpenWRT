@@ -6,6 +6,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 SERVICE_NAME="Pinger XCP"
+SCREEN_NAME="xcp-pinger"
 PING_HOST="[host]"
 
 function loop() {
@@ -25,12 +26,12 @@ function loop() {
 
 function start() {
   echo -e "Starting ${SERVICE_NAME} service ..."
-  screen -AmdS xcp-pinger "${0}" -l
+  screen -AmdS ${SCREEN_NAME} "${0}" -l
 }
 
 function stop() {
   echo -e "Stopping ${SERVICE_NAME} service ..."
-  kill $(screen -list | grep xcp-pinger | awk -F '[.]' {'print $1'})
+  kill $(screen -list | grep ${SCREEN_NAME} | awk -F '[.]' {'print $1'})
 }
 
 function usage() {
