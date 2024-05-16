@@ -12,13 +12,15 @@ PING_HOST="[host]"
 function loop() {
   while true; do
     current_time=$(date +"%Y-%m-%d %H:%M:%S")
-    if curl -X "GET" --connect-timeout 3 -so /dev/null ${PING_HOST}; then
+    if curl --interface eth0.101 -X "GET" --connect-timeout 3 -so /dev/null ${PING_HOST}; then
         echo "[$current_time] | ${PING_HOST} | Koneksi Up" >> /www/pingstatus.txt
 	    echo "Koneksi Up"
+	    bledon -lan on
 	    sleep 30
     else
         echo "[$current_time] | ${PING_HOST} | Koneksi Down" >> /www/pingstatus.txt
 	    echo "Koneksi Down"
+	    bledon -lan off
 	    sleep 3
     fi
   done
